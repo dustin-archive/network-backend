@@ -7,7 +7,11 @@ const postComment = require('./app/postComment')
 
 // temporary
 const comments = [
-  { clientID: 0, comment: 'test', name: 'whaaaley' }
+  {
+    clientID: null,
+    comment: 'Welcome to the almost realtime comment system!',
+    name: 'Notice'
+  }
 ]
 
 const handler = async (request, response) => {
