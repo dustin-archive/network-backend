@@ -1,71 +1,40 @@
 
 const micro = require('micro')
 
-// temporary comment data
+const { clientMap, realtime } = require('./app/realtime')
+const fetchComments = require('./app/fetchComments')
+const postComment = require('./app/postComment')
+
+// temporary
 const comments = [
-  { comment: 'test', name: 'whaaaley' }
+  { clientID: 0, comment: 'test', name: 'whaaaley' }
 ]
 
-// const clients = new WeakMap()
-// let clientID = 0
-
-// const realtime = (req, res) => {
-//   res.setHeader('Content-Type', 'text/event-stream')
-//
-//   const id = {
-//     id: clientID++
-//   }
-//
-//   clients.set(id, req)
-//
-//   const onClose = () => {
-//     clients.delete(id)
-//   }
-//
-//   req.on('close', onClose)
-// }
-
-const postComment = body => (req, res) => {
-  comments.push({
-    comment: body.comment,
-    name: body.name
-  })
-
-  console.log(comments)
-
-  return { message: 'message received' }
-}
-
-const fetchComments = () => {
-  return { comments }
-}
-
-const handler = async (req, res) => {
+const handler = async (request, response) => {
   // set response headers
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS')
+  response.setHeader('Access-Control-Allow-Origin', '*')
+  response.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS')
 
   // handle preflighted requests
-  if (req.method === 'OPTIONS') {
-    micro.send(res, 200)
+  if (request.method === 'OPTIONS') {
+    micro.send(response, 200)
   }
 
   //
-  // if (req.url === '/realtime') {
-  //   return realtime(req, res)
-  // }
+  if (request.url === '/realtime') {
+    return realtime(request, response)
+  }
 
   //
-  if (req.method === 'POST') {
-    const body = await micro.json(req)
+  if (request.method === 'POST') {
+    const body = await micro.json(request)
 
-    if (req.url === '/postComment') {
-      return postComment(body)(req, res)
+    if (request.url === '/postComment') {
+      return postComment({ body, clientMap, comments })
     }
 
-    if (req.url === '/fetchComments') {
-      return fetchComments()
+    if (request.url === '/fetchComments') {
+      return fetchComments({ comments })
     }
   }
 }
