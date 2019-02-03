@@ -1,25 +1,42 @@
 
+const crypto = require('crypto')
+
 const clientMap = new Map()
-let clientID = 0
 
 const realtime = (request, response) => {
+  const clientID = crypto.randomBytes(6).toString('hex')
+
   response.setHeader('Content-Type', 'text/event-stream')
 
   clientMap.set(clientID, response)
 
-  request.on('close', () => {
+  const deleteClient = () => {
     clientMap.delete(clientID)
-  })
+  }
+
+  request.on('aborted', deleteClient)
+  // request.on('close', deleteClient)
 
   const message = JSON.stringify({
     clientID,
     status: true,
-    type: 'connection'
+    type: 'connect'
   })
 
   response.write('data:' + message + '\n\n')
 
-  ++clientID
+  // end the connection in 30 minutes
+  setTimeout(async () => {
+    const message = JSON.stringify({
+      clientID,
+      status: true,
+      type: 'timeout'
+    })
+
+    await response.write('data:' + message + '\n\n')
+
+    response.end()
+  }, 1800000)
 }
 
 module.exports = { clientMap, realtime }
