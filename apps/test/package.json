@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Dustin Dowell <dustindowell2@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "micro": "^9.3.3"
+  }
+}
