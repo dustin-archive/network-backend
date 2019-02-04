@@ -9,8 +9,8 @@ const postComment = require('./app/postComment')
 const comments = [
   {
     clientID: null,
-    comment: 'Welcome to the almost realtime comment system!',
-    name: 'Notice'
+    comment: 'You\'re now connected.',
+    name: 'server'
   }
 ]
 
