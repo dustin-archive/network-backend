@@ -1,0 +1,10 @@
+{
+  "name": "network-backend",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Dustin Dowell <dustindowell2@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node apps/test/index.js"
+  },
+}
