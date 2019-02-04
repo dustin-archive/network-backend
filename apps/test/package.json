@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "micro": "^9.3.3"
+  },
+  "engines": {
+    "node": "10.15.0"
   }
 }

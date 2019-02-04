@@ -5,6 +5,9 @@
   "author": "Dustin Dowell <dustindowell2@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "start": "node apps/test/index.js"
+    "postinstall": "npm i --prefix apps/test"
+  },
+  "engines": {
+    "node": "10.15.0"
   }
 }
