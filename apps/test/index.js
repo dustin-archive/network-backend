@@ -17,7 +17,7 @@ const comments = [
 const handler = async (request, response) => {
   // set response headers
   response.setHeader('Access-Control-Allow-Origin', '*')
-  response.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Access-Control-Allow-Origin,X-HTTP-Method-Override,Content-Type,Authorization,Accept')
   response.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS')
 
   // handle preflighted requests
