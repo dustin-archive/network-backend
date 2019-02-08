@@ -1,14 +1,26 @@
 
-const { appendCommentList, clientMap } = require('./realtime')
+const { appendComment, clientMap, getClientList } = require('./realtime')
 
-const postComment = ({ body }) => {
-  const comment = {
-    clientID: body.clientID,
-    comment: body.comment,
-    name: body.name
+const postComment = data => {
+  const { clientID, comment } = data
+
+  appendComment({ comment })
+
+  //
+  // update name from the latest comment
+  //
+
+  const { name, response } = clientMap.get(clientID)
+
+  if (name !== comment.name) {
+    clientMap.set(clientID, { name: comment.name, response })
+
+    getClientList()
   }
 
-  appendCommentList({ commentList: [comment] })
+  //
+  // send the comment to all clients
+  //
 
   const message = JSON.stringify({
     comment,
@@ -17,8 +29,12 @@ const postComment = ({ body }) => {
   })
 
   for (let [key] of clientMap) {
-    clientMap.get(key).write('data:' + message + '\n\n')
+    clientMap.get(key).response.write('data:' + message + '\n\n')
   }
+
+  //
+  //
+  //
 
   return {
     message: 'message received',
