@@ -46,6 +46,6 @@ const handler = async (request, response) => {
 
 const server = micro(handler)
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log('Listening on port 8080\n')
+server.listen(process.env.PORT || 3000, () => {
+  console.log('Listening on port 3000\n')
 })
