@@ -2,6 +2,7 @@
 const micro = require('micro')
 
 const { clientMap, realtime } = require('./app/realtime')
+const fetchClientList = require('./app/fetchClientList')
 const fetchComments = require('./app/fetchComments')
 const postComment = require('./app/postComment')
 
@@ -40,6 +41,10 @@ const handler = async (request, response) => {
 
     if (request.url === '/fetchComments') {
       return fetchComments({ comments })
+    }
+
+    if (request.url === '/fetchClientList') {
+      return fetchClientList({ clientList })
     }
   }
 }

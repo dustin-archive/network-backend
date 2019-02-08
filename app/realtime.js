@@ -10,6 +10,19 @@ const realtime = (request, response) => {
 
   clientMap.set(clientID, response)
 
+  // update clientList on each connectoin
+  const clientMessage = JSON.stringify({
+    client: {
+      clientID
+    },
+    status: true,
+    type: 'client'
+  })
+
+  for (let [key] of clientMap) {
+    clientMap.get(key).write('data:' + clientMessage + '\n\n')
+  }
+
   const deleteClient = () => {
     clientMap.delete(clientID)
   }
@@ -17,13 +30,13 @@ const realtime = (request, response) => {
   request.on('aborted', deleteClient)
   // request.on('close', deleteClient)
 
-  const message = JSON.stringify({
+  const connectMessage = JSON.stringify({
     clientID,
     status: true,
     type: 'connect'
   })
 
-  response.write('data:' + message + '\n\n')
+  response.write('data:' + connectMessage + '\n\n')
 
   // end the connection in 30 minutes
   setTimeout(async () => {
