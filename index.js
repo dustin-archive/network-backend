@@ -1,19 +1,8 @@
 
 const micro = require('micro')
 
-const { clientMap, realtime } = require('./app/realtime')
-const fetchClientList = require('./app/fetchClientList')
-const fetchComments = require('./app/fetchComments')
+const { realtime } = require('./app/realtime')
 const postComment = require('./app/postComment')
-
-// temporary
-const comments = [
-  {
-    clientID: null,
-    comment: 'You\'re now connected.',
-    name: 'server'
-  }
-]
 
 const handler = async (request, response) => {
   // set response headers
@@ -36,15 +25,7 @@ const handler = async (request, response) => {
     const body = await micro.json(request)
 
     if (request.url === '/postComment') {
-      return postComment({ body, clientMap, comments })
-    }
-
-    if (request.url === '/fetchComments') {
-      return fetchComments({ comments })
-    }
-
-    if (request.url === '/fetchClientList') {
-      return fetchClientList({ clientList })
+      return postComment({ body })
     }
   }
 }
