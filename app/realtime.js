@@ -101,7 +101,7 @@ const realtime = (request, response) => {
   //
 
   const commentListMessage = JSON.stringify({
-    commentList,
+    commentList: commentList.slice(commentList.length - 32),
     status: true,
     type: 'commentList'
   })
