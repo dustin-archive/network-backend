@@ -33,11 +33,11 @@ const postComment = data => {
   }
 
   //
-  //
+  // send response
   //
 
   return {
-    message: 'message received',
+    message: '/postComment ok',
     status: true
   }
 }
