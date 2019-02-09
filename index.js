@@ -9,10 +9,9 @@ const handler = async (request, response) => {
   // set response headers
   //
 
-  response.setHeader('Access-Control-Allow-Origin', '*')
-  // response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Access-Control-Allow-Origin,X-HTTP-Method-Override,Content-Type,Authorization,Accept')
   response.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin')
   response.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS')
+  response.setHeader('Access-Control-Allow-Origin', '*')
 
   //
   // handle preflighted requests
