@@ -58,7 +58,10 @@ const realtime = (request, response) => {
   //
   //
 
+  response.setHeader('Cache-Control', 'no-cache, no-transform')
   response.setHeader('Content-Type', 'text/event-stream')
+  response.setHeader('Keep-Alive', 'timeout=3600')
+  response.setHeader('Transfer-Encoding', 'identity')
 
   //
   // store the connection
@@ -119,6 +122,7 @@ const realtime = (request, response) => {
   //
 
   request.on('aborted', () => {
+    console.log('Connection aborted...')
     clientMap.delete(clientID)
   })
 
